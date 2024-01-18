@@ -14,7 +14,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/popular_img"
+            android:id="@+id/img_tumbnail"
             android:layout_width="match_parent"
             android:foreground="?android:attr/selectableItemBackground"
             android:layout_height="match_parent"
@@ -30,7 +30,7 @@
             app:srcCompat="@drawable/img_btm_overlay" />
 
         <TextView
-            android:id="@+id/popular_txt"
+            android:id="@+id/str_meal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Here is sample"

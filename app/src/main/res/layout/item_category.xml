@@ -5,7 +5,7 @@
     android:layout_height="wrap_content">
 
     <ImageView
-        android:id="@+id/Desserts"
+        android:id="@+id/tumb_category"
         android:layout_width="85dp"
         android:layout_height="85dp"
         android:layout_alignParentTop="true"
@@ -20,12 +20,13 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:id="@+id/txt_category"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/Desserts"
-        android:layout_alignStart="@+id/Desserts"
-        android:layout_alignEnd="@+id/Desserts"
-        android:layout_alignBottom="@id/Desserts"
+        android:layout_below="@+id/tumb_category"
+        android:layout_alignStart="@+id/tumb_category"
+        android:layout_alignEnd="@+id/tumb_category"
+        android:layout_alignBottom="@id/tumb_category"
         android:layout_marginTop="4dp"
         android:layout_marginBottom="15dp"
         android:fontFamily="@font/poppins_light"
@@ -34,8 +35,8 @@
         android:textColor="@color/black"
         android:textSize="17sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/Desserts"
+        app:layout_constraintEnd_toEndOf="@+id/tumb_category"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Desserts" />
+        app:layout_constraintTop_toBottomOf="@+id/tumb_category" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
