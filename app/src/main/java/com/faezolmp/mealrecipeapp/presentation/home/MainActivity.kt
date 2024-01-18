@@ -1,0 +1,15 @@
+package com.faezolmp.mealrecipeapp.presentation.home
+
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import com.faezolmp.mealrecipeapp.R
+import com.faezolmp.mealrecipeapp.databinding.ActivityMainBinding
+
+class MainActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityMainBinding
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+    }
+}
