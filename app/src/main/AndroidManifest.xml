@@ -13,6 +13,9 @@
         android:theme="@style/Theme.MealRecipeApp"
         tools:targetApi="31">
         <activity
+            android:name=".presentation.detailReceipe.DetailReceipeActivity"
+            android:exported="false" />
+        <activity
             android:name=".presentation.home.MainActivity"
             android:exported="true">
             <intent-filter>
