@@ -1,6 +1,7 @@
 package com.faezolmp.mealrecipeapp.core.domain.usecase
 
 import com.faezolmp.mealrecipeapp.core.data.Resource
+import com.faezolmp.mealrecipeapp.core.domain.model.ModelDetailDataMeal
 import com.faezolmp.mealrecipeapp.core.domain.model.ModelListCategory
 import com.faezolmp.mealrecipeapp.core.domain.model.ModelListMealByCategory
 import com.faezolmp.mealrecipeapp.core.domain.repository.Repository
@@ -23,5 +24,9 @@ class ImplementUseCase @Inject constructor(
     ): Flow<Resource<List<ModelListMealByCategory>>> {
         return repository.getDataListByCategoryy(category, meal)
 
+    }
+
+    override fun getDetailMealBy(idmeal: String): Flow<Resource<List<ModelDetailDataMeal>>> {
+        return repository.getDetailMealBy(idmeal)
     }
 }

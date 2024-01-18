@@ -2,6 +2,8 @@ package com.faezolmp.mealrecipeapp.core.data
 
 import com.faezolmp.mealrecipeapp.core.data.source.remote.RemoteDataSource
 import com.faezolmp.mealrecipeapp.core.data.source.remote.network.ApiResponse
+import com.faezolmp.mealrecipeapp.core.data.source.remote.response.MealsItemDetail
+import com.faezolmp.mealrecipeapp.core.domain.model.ModelDetailDataMeal
 import com.faezolmp.mealrecipeapp.core.domain.model.ModelListCategory
 import com.faezolmp.mealrecipeapp.core.domain.model.ModelListMealByCategory
 import com.faezolmp.mealrecipeapp.core.domain.repository.Repository
@@ -48,6 +50,29 @@ class ImplementRepository @Inject constructor(
                 is ApiResponse.Success -> {
                     val data =
                         DataMapper.mapperDataListByCategoryFromDataLayerToDomainLayer(dataResponse.data)
+                    val dataResult = flowOf(Resource.Success(data))
+                    emitAll(dataResult)
+                }
+
+                is ApiResponse.Error -> {
+                    emit(Resource.Error(dataResponse.errorMessage))
+                }
+
+                is ApiResponse.Empty -> {
+                    emit(Resource.Loading())
+                }
+            }
+        }
+    }
+
+    override fun getDetailMealBy(idmeal: String): Flow<Resource<List<ModelDetailDataMeal>>> {
+        return flow {
+            emit(Resource.Loading())
+            val dataResponse = remoteDataSource.getDetailMealBy(idmeal).first()
+            when (dataResponse) {
+                is ApiResponse.Success -> {
+                    val data =
+                        DataMapper.mapperDataDetailFromDataLayerToDomainLayer(dataResponse.data)
                     val dataResult = flowOf(Resource.Success(data))
                     emitAll(dataResult)
                 }

@@ -5,6 +5,7 @@ import com.faezolmp.mealrecipeapp.core.data.source.remote.network.ApiResponse
 import com.faezolmp.mealrecipeapp.core.data.source.remote.network.ApiService
 import com.faezolmp.mealrecipeapp.core.data.source.remote.response.CategoriesItem
 import com.faezolmp.mealrecipeapp.core.data.source.remote.response.MealsItem
+import com.faezolmp.mealrecipeapp.core.data.source.remote.response.MealsItemDetail
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -59,6 +60,31 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
                 Log.d(
                     "Tracker Network",
                     "Response function getDataListByCategory Erorr ${e.message.toString()}"
+                )
+            }
+        }.flowOn(Dispatchers.IO)
+    }
+
+    fun getDetailMealBy(idmeal: String): Flow<ApiResponse<List<MealsItemDetail>>>{
+        return flow<ApiResponse<List<MealsItemDetail>>> {
+            try {
+                val response = apiService.getDetailMealBy(idmeal)
+                val data = response.meals
+
+                if (data != null && data.isNotEmpty()){
+                    emit(ApiResponse.Success(data))
+                }else{
+                    emit(ApiResponse.Empty)
+                    Log.d(
+                        "Tracker",
+                        "Response function getDetailMealBy $response"
+                    )
+                }
+            }catch (e: Exception){
+                ApiResponse.Error(e.message.toString())
+                Log.d(
+                    "Tracker Network",
+                    "Response function getDetailMealBy Erorr ${e.message.toString()}"
                 )
             }
         }.flowOn(Dispatchers.IO)
