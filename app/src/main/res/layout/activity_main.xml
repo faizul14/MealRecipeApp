@@ -296,16 +296,29 @@
         android:visibility="gone"
         tools:listitem="@layout/item_meal" />
 
-    <ProgressBar
+<!--    <ProgressBar-->
+<!--        android:id="@+id/loadingListMeal"-->
+<!--        android:layout_width="50dp"-->
+<!--        android:layout_height="50dp"-->
+<!--        android:visibility="visible"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/popular_text"-->
+<!--        />-->
+
+    <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/loadingListMeal"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:visibility="visible"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="16dp"
+        app:lottie_autoPlay="true"
+        app:lottie_rawRes="@raw/loading_anim"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/popular_text"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/popular_text" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"

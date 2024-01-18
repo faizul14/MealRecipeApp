@@ -8,5 +8,5 @@ import kotlinx.coroutines.flow.Flow
 interface Repository {
     fun sampleinterface(): String
     fun getListCategory(): Flow<Resource<List<ModelListCategory>>>
-    fun getDataListByCategoryy(category: String): Flow<Resource<List<ModelListMealByCategory>>>
+    fun getDataListByCategoryy(category: String, meal: String): Flow<Resource<List<ModelListMealByCategory>>>
 }

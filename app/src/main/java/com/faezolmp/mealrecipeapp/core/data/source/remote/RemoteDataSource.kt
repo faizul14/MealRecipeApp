@@ -35,10 +35,15 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
         }.flowOn(Dispatchers.IO)
     }
 
-    fun getDataListByCategory(category: String): Flow<ApiResponse<List<MealsItem>>> {
+    fun getDataListBy(category: String, meal: String): Flow<ApiResponse<List<MealsItem>>> {
         return flow<ApiResponse<List<MealsItem>>> {
             try {
-                val response = apiService.getListDataByCtegory(category.toString())
+                val response: Any
+                if (!category.equals("")){
+                    response = apiService.getListDataByCtegory(category.toString())
+                }else{
+                    response = apiService.getListDataByMeal(meal.toString())
+                }
                 val data = response.meals
                 if (data != null && data.isNotEmpty()) {
                     emit(ApiResponse.Success(data))

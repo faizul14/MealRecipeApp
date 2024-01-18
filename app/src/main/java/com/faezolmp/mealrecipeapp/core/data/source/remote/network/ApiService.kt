@@ -13,4 +13,9 @@ interface ApiService {
     suspend fun getListDataByCtegory(
         @Query("c") category: String
     ): ResponseListByCategory
+
+    @GET("api/json/v1/1/filter.php")
+    suspend fun getListDataByMeal(
+        @Query("i") meal: String
+    ): ResponseListByCategory
 }

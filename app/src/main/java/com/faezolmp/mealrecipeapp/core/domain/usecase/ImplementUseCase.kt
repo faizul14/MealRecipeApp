@@ -18,7 +18,10 @@ class ImplementUseCase @Inject constructor(
         return repository.getListCategory()
     }
 
-    override fun getDataListByCategoryy(
-        category: String
-    ): Flow<Resource<List<ModelListMealByCategory>>> = repository.getDataListByCategoryy(category)
+    override fun getDataListBy(
+        category: String, meal: String
+    ): Flow<Resource<List<ModelListMealByCategory>>> {
+        return repository.getDataListByCategoryy(category, meal)
+
+    }
 }

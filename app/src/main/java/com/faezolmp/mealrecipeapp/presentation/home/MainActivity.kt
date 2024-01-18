@@ -1,19 +1,20 @@
 package com.faezolmp.mealrecipeapp.presentation.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.faezolmp.mealrecipeapp.core.data.Resource
 import com.faezolmp.mealrecipeapp.core.ui.ListCategoryAdapter
-import com.faezolmp.mealrecipeapp.core.ui.ListDataByCategoryAdapter
+import com.faezolmp.mealrecipeapp.core.ui.ListDataByAdapter
 import com.faezolmp.mealrecipeapp.databinding.ActivityMainBinding
+import com.faezolmp.mealrecipeapp.presentation.search.SearchActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -22,14 +23,24 @@ class MainActivity : AppCompatActivity(), ListCategoryAdapter.CallBackInterface 
     private lateinit var binding: ActivityMainBinding
     private val viewModel: MainViewModel by viewModels()
     private val listCategoryAdapter by lazy { ListCategoryAdapter(this@MainActivity) }
-    private val listDataMealByCategoryAdapter by lazy { ListDataByCategoryAdapter() }
+    private val listDataMealByCategoryAdapter by lazy { ListDataByAdapter() }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         setUpInit()
+        hitView()
         viewModelObserver()
+    }
+
+    private fun hitView() {
+        binding.apply {
+            editText.setOnClickListener {
+                val move = Intent(this@MainActivity, SearchActivity::class.java)
+                startActivity(move)
+            }
+        }
     }
 
     private fun setUpInit() {

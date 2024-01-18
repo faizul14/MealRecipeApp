@@ -1,6 +1,5 @@
-package com.faezolmp.mealrecipeapp.presentation.home
+package com.faezolmp.mealrecipeapp.presentation.search
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import com.faezolmp.mealrecipeapp.core.domain.usecase.UseCase
@@ -13,11 +12,10 @@ import kotlinx.coroutines.flow.mapLatest
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(private val useCase: UseCase): ViewModel() {
+class SearchViewModel @Inject constructor(private val useCase: UseCase): ViewModel() {
+    val trackerSearch = MutableStateFlow("")
 
-    val categoryClick = MutableStateFlow("")
-
-    val categoryValue = categoryClick
+    val querySearch = trackerSearch
         .debounce(300)
         .distinctUntilChanged()
         .filter {
@@ -27,7 +25,5 @@ class MainViewModel @Inject constructor(private val useCase: UseCase): ViewModel
             it
         }.asLiveData()
 
-    val getSampleData = useCase.sampleinterface()
-    val getListCategory = useCase.getListCategory().asLiveData()
-    fun getListDataMealByCategory(category: String) = useCase.getDataListBy(category, meal = "").asLiveData()
+    fun getListDataByMeal(meal: String) = useCase.getDataListBy(category = "", meal).asLiveData()
 }

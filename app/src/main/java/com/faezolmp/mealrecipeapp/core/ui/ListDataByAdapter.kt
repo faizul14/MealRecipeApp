@@ -7,7 +7,7 @@ import com.bumptech.glide.Glide
 import com.faezolmp.mealrecipeapp.core.domain.model.ModelListMealByCategory
 import com.faezolmp.mealrecipeapp.databinding.ItemMealBinding
 
-class ListDataByCategoryAdapter : RecyclerView.Adapter<ListDataByCategoryAdapter.ViewHolder>() {
+class ListDataByAdapter : RecyclerView.Adapter<ListDataByAdapter.ViewHolder>() {
 
     private val listDataMealByCategory = ArrayList<ModelListMealByCategory>()
 
