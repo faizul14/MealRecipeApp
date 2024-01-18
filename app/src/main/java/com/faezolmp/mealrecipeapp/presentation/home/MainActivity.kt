@@ -1,10 +1,13 @@
 package com.faezolmp.mealrecipeapp.presentation.home
 
 import android.os.Bundle
+import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.faezolmp.mealrecipeapp.core.data.Resource
@@ -12,12 +15,13 @@ import com.faezolmp.mealrecipeapp.core.ui.ListCategoryAdapter
 import com.faezolmp.mealrecipeapp.core.ui.ListDataByCategoryAdapter
 import com.faezolmp.mealrecipeapp.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), ListCategoryAdapter.CallBackInterface {
     private lateinit var binding: ActivityMainBinding
     private val viewModel: MainViewModel by viewModels()
-    private val listCategoryAdapter by lazy { ListCategoryAdapter() }
+    private val listCategoryAdapter by lazy { ListCategoryAdapter(this@MainActivity) }
     private val listDataMealByCategoryAdapter by lazy { ListDataByCategoryAdapter() }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,7 +72,16 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        viewModel.getListDataMealByCategory.observe(this){dataMeal ->
+        viewModel.categoryValue.observe(this){dataCategory ->
+            visibleLoading()
+            if (!dataCategory.equals("")){
+                observerListDataByCategory(dataCategory)
+            }
+        }
+    }
+
+    fun observerListDataByCategory(category: String){
+        viewModel.getListDataMealByCategory(category).observe(this){dataMeal ->
             when (dataMeal) {
                 is Resource.Loading -> {
                     Toast.makeText(this, "Loading .. .", Toast.LENGTH_SHORT).show()
@@ -87,6 +100,27 @@ class MainActivity : AppCompatActivity() {
                     binding.rvListMeal.adapter = listDataMealByCategoryAdapter
                 }
             }
+        }
+    }
+
+    private fun visibleLoading(){
+        binding.apply {
+            loadingListMeal.visibility = View.GONE
+            rvListMeal.visibility = View.VISIBLE
+        }
+    }
+    override fun passingDataFromAdapterToActivity(category: String) {
+        binding.apply {
+            rvListMeal.visibility = View.GONE
+            loadingListMeal.visibility = View.VISIBLE
+        }
+//        Toast.makeText(this@MainActivity, category, Toast.LENGTH_SHORT).show()
+        try {
+            lifecycleScope.launch {
+                viewModel.categoryClick.value = category
+            }
+        }catch (e: Exception){
+            Log.d("Tracker MainActivity", e.message.toString())
         }
     }
 

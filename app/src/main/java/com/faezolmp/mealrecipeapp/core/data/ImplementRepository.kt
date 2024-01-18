@@ -43,7 +43,7 @@ class ImplementRepository @Inject constructor(
     override fun getDataListByCategoryy(category: String): Flow<Resource<List<ModelListMealByCategory>>> {
         return flow {
             emit(Resource.Loading())
-            val dataResponse = remoteDataSource.getDataListByCategory().first()
+            val dataResponse = remoteDataSource.getDataListByCategory(category).first()
             when (dataResponse) {
                 is ApiResponse.Success -> {
                     val data =
