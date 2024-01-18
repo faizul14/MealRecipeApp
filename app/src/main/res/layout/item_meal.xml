@@ -7,8 +7,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.cardview.widget.CardView
-        android:layout_width="210dp"
-        android:layout_height="190dp"
+        android:layout_width="170dp"
+        android:layout_height="150dp"
         app:cardCornerRadius="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -34,8 +34,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Here is sample"
-            android:layout_gravity="bottom"
-            android:textSize="16dp"
+            android:layout_gravity="bottom|start"
+            android:textSize="14dp"
+            android:maxLines="2"
             android:textColor="@color/white"
             android:fontFamily="@font/poppins_semibold"
             android:paddingStart="15dp"

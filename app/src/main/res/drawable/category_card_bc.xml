@@ -11,8 +11,8 @@
                 android:color="#3ABC57" />
 
             <size
-                android:width="85dp"
-                android:height="85dp" />
+                android:width="65dp"
+                android:height="65dp" />
         </shape>
     </item>
 </selector>
