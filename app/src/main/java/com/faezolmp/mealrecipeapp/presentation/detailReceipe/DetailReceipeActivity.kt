@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide
 import com.faezolmp.mealrecipeapp.R
 import com.faezolmp.mealrecipeapp.core.data.Resource
 import com.faezolmp.mealrecipeapp.core.domain.model.ModelDetailDataMeal
+import com.faezolmp.mealrecipeapp.core.domain.model.ModelListMealBookMark
 import com.faezolmp.mealrecipeapp.databinding.ActivityDetailReceipeBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -61,9 +62,17 @@ class DetailReceipeActivity : AppCompatActivity() {
             }
             //Button Favorite
             imgFavorite.setOnClickListener {
-                Toast.makeText(
-                    this@DetailReceipeActivity, "Feature under development", Toast.LENGTH_SHORT
-                ).show()
+//                Toast.makeText(
+//                    this@DetailReceipeActivity, "Feature under development", Toast.LENGTH_SHORT
+//                ).show()
+                val data = ModelListMealBookMark(
+                    id = 0,
+                    strMeal = dataDetail.strMeal,
+                    strMealThumb = dataDetail.strMealThumb,
+                    idMeal = dataDetail.idMeal,
+                )
+                viewModel.addDataBookMarkMeal(data)
+                imgFavorite.setImageDrawable(resources.getDrawable(R.drawable.mark_ic_true))
             }
             Glide
                 .with(this@DetailReceipeActivity)

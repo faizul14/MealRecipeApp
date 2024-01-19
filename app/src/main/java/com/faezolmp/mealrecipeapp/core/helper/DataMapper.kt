@@ -1,10 +1,12 @@
 package com.faezolmp.mealrecipeapp.core.helper
 
+import com.faezolmp.mealrecipeapp.core.data.source.local.entity.EntityMeal
 import com.faezolmp.mealrecipeapp.core.data.source.remote.response.CategoriesItem
 import com.faezolmp.mealrecipeapp.core.data.source.remote.response.MealsItem
 import com.faezolmp.mealrecipeapp.core.data.source.remote.response.MealsItemDetail
 import com.faezolmp.mealrecipeapp.core.domain.model.ModelDetailDataMeal
 import com.faezolmp.mealrecipeapp.core.domain.model.ModelListCategory
+import com.faezolmp.mealrecipeapp.core.domain.model.ModelListMealBookMark
 import com.faezolmp.mealrecipeapp.core.domain.model.ModelListMealByCategory
 
 object DataMapper {
@@ -100,5 +102,42 @@ object DataMapper {
         }
 
         return dataResult
+    }
+
+    fun mapperDataListBookMarkFromDataLayerToDomainLayer(input: List<EntityMeal>): List<ModelListMealBookMark> {
+        var dataResult = ArrayList<ModelListMealBookMark>()
+        input.map {
+            val data = ModelListMealBookMark(
+                id =it.id,
+                strMealThumb = it.strMealThumb,
+                idMeal = it.idMeal,
+                strMeal = it.strMeal,
+            )
+            dataResult.add(data)
+        }
+        return dataResult
+    }
+
+    fun mapperDataListBookMarkFromDomainLyerToDataLayer(input: ModelListMealBookMark): EntityMeal {
+            val data = EntityMeal(
+                id =input.id,
+                strMealThumb = input.strMealThumb,
+                idMeal = input.idMeal,
+                strMeal = input.strMeal,
+            )
+        return data
+    }
+
+    fun mapperHelper(input: List<ModelListMealBookMark>): List<ModelListMealByCategory>{
+        val resultData = ArrayList<ModelListMealByCategory>()
+            input.map {
+                val data = ModelListMealByCategory(
+                    strMealThumb = it.strMealThumb,
+                    idMeal = it.idMeal,
+                    strMeal = it.strMeal,
+                )
+                resultData.add(data)
+            }
+        return resultData
     }
 }

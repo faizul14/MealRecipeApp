@@ -1,8 +1,10 @@
 package com.faezolmp.mealrecipeapp.core.domain.usecase
 
 import com.faezolmp.mealrecipeapp.core.data.Resource
+import com.faezolmp.mealrecipeapp.core.data.source.local.entity.EntityMeal
 import com.faezolmp.mealrecipeapp.core.domain.model.ModelDetailDataMeal
 import com.faezolmp.mealrecipeapp.core.domain.model.ModelListCategory
+import com.faezolmp.mealrecipeapp.core.domain.model.ModelListMealBookMark
 import com.faezolmp.mealrecipeapp.core.domain.model.ModelListMealByCategory
 import com.faezolmp.mealrecipeapp.core.domain.repository.Repository
 import kotlinx.coroutines.flow.Flow
@@ -28,5 +30,17 @@ class ImplementUseCase @Inject constructor(
 
     override fun getDetailMealBy(idmeal: String): Flow<Resource<List<ModelDetailDataMeal>>> {
         return repository.getDetailMealBy(idmeal)
+    }
+
+    override fun getDataMailBookmark(): Flow<Resource<List<ModelListMealBookMark>>> {
+        return repository.getDataMailBookmark()
+    }
+
+    override suspend fun addDataMealBooMark(dataBooMarkMeal: ModelListMealBookMark) {
+        repository.addDataMealBooMark(dataBooMarkMeal)
+    }
+
+    override fun deleteDataMealBooMark(dataBooMarkMeal: ModelListMealBookMark) {
+        repository.deleteDataMealBooMark(dataBooMarkMeal)
     }
 }

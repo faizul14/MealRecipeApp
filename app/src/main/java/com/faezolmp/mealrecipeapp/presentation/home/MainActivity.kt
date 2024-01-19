@@ -14,6 +14,7 @@ import com.faezolmp.mealrecipeapp.core.data.Resource
 import com.faezolmp.mealrecipeapp.core.ui.ListCategoryAdapter
 import com.faezolmp.mealrecipeapp.core.ui.ListDataByAdapter
 import com.faezolmp.mealrecipeapp.databinding.ActivityMainBinding
+import com.faezolmp.mealrecipeapp.presentation.bookmark.BookMarkActivity
 import com.faezolmp.mealrecipeapp.presentation.search.SearchActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -38,6 +39,10 @@ class MainActivity : AppCompatActivity(), ListCategoryAdapter.CallBackInterface 
         binding.apply {
             editText.setOnClickListener {
                 val move = Intent(this@MainActivity, SearchActivity::class.java)
+                startActivity(move)
+            }
+            imageViewGotobookmark.setOnClickListener {
+                val move = Intent(this@MainActivity, BookMarkActivity::class.java)
                 startActivity(move)
             }
         }

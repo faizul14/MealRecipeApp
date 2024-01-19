@@ -1,10 +1,13 @@
 package com.faezolmp.mealrecipeapp.core.data
 
+import com.faezolmp.mealrecipeapp.core.data.source.local.entity.EntityMeal
+import com.faezolmp.mealrecipeapp.core.data.source.local.room.DaoMeal
 import com.faezolmp.mealrecipeapp.core.data.source.remote.RemoteDataSource
 import com.faezolmp.mealrecipeapp.core.data.source.remote.network.ApiResponse
 import com.faezolmp.mealrecipeapp.core.data.source.remote.response.MealsItemDetail
 import com.faezolmp.mealrecipeapp.core.domain.model.ModelDetailDataMeal
 import com.faezolmp.mealrecipeapp.core.domain.model.ModelListCategory
+import com.faezolmp.mealrecipeapp.core.domain.model.ModelListMealBookMark
 import com.faezolmp.mealrecipeapp.core.domain.model.ModelListMealByCategory
 import com.faezolmp.mealrecipeapp.core.domain.repository.Repository
 import com.faezolmp.mealrecipeapp.core.helper.DataMapper
@@ -16,7 +19,8 @@ import kotlinx.coroutines.flow.flowOf
 import javax.inject.Inject
 
 class ImplementRepository @Inject constructor(
-    private val remoteDataSource: RemoteDataSource
+    private val remoteDataSource: RemoteDataSource,
+    private val daoMeal: DaoMeal,
 ) : Repository {
     override fun sampleinterface() = "retunvaluesample"
     override fun getListCategory(): Flow<Resource<List<ModelListCategory>>> {
@@ -86,5 +90,31 @@ class ImplementRepository @Inject constructor(
                 }
             }
         }
+    }
+
+    override fun getDataMailBookmark(): Flow<Resource<List<ModelListMealBookMark>>> {
+        return flow {
+            emit(Resource.Loading())
+            try {
+                val dataResponse = daoMeal.getListDataMeal().first()
+                if (dataResponse.isNotEmpty()){
+                    val data = DataMapper.mapperDataListBookMarkFromDataLayerToDomainLayer(dataResponse)
+                    val dataResult = flowOf(Resource.Success(data))
+                    emitAll(dataResult)
+                }else{
+                    emit(Resource.Loading())
+                }
+            }catch (e : Exception){
+                emit(Resource.Error(e.message.toString()))
+            }
+        }
+    }
+
+    override suspend fun addDataMealBooMark(dataBookMarkMeal: ModelListMealBookMark) {
+        daoMeal.addMeal(DataMapper.mapperDataListBookMarkFromDomainLyerToDataLayer(dataBookMarkMeal))
+    }
+
+    override fun deleteDataMealBooMark(dataBookMarkMeal: ModelListMealBookMark) {
+        daoMeal.deleteMeal(DataMapper.mapperDataListBookMarkFromDomainLyerToDataLayer(dataBookMarkMeal))
     }
 }
