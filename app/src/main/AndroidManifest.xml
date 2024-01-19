@@ -16,6 +16,9 @@
         android:theme="@style/Theme.MealRecipeApp"
         tools:targetApi="31">
         <activity
+            android:name=".presentation.home.MainActivity"
+            android:exported="false" />
+        <activity
             android:name=".presentation.bookmark.BookMarkActivity"
             android:exported="false" />
         <activity
@@ -25,7 +28,7 @@
             android:name=".presentation.detailReceipe.DetailReceipeActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.home.MainActivity"
+            android:name=".presentation.splashscreen.SplashScreenActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

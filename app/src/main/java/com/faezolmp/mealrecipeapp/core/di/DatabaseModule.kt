@@ -18,7 +18,7 @@ class DatabaseModule {
     @Provides
     fun provideDatabase(@ApplicationContext context: Context): DatabaseMeal = Room.databaseBuilder(
         context,
-        DatabaseMeal::class.java, "Enstore.db"
+        DatabaseMeal::class.java, "Meal.db"
     ).fallbackToDestructiveMigration().build()
 
     @Provides

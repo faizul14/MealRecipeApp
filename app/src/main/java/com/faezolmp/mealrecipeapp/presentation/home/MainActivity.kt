@@ -71,7 +71,7 @@ class MainActivity : AppCompatActivity(), ListCategoryAdapter.CallBackInterface 
         viewModel.getListCategory.observe(this) { dataListCategory ->
             when (dataListCategory) {
                 is Resource.Loading -> {
-                    Toast.makeText(this, "Loading .. .", Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(this, "Loading .. .", Toast.LENGTH_SHORT).show()
                 }
 
                 is Resource.Error -> {

@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.faezolmp.mealrecipeapp.core.domain.model.ModelListMealByCategory
+import com.faezolmp.mealrecipeapp.core.helper.DataRandom
 import com.faezolmp.mealrecipeapp.databinding.ItemMealBinding
 import com.faezolmp.mealrecipeapp.presentation.detailReceipe.DetailReceipeActivity
 
@@ -24,6 +25,7 @@ class ListDataByAdapter : RecyclerView.Adapter<ListDataByAdapter.ViewHolder>() {
             binding.apply {
                 Glide.with(itemView.context).load("${data.strMealThumb}/preview").into(imgTumbnail)
                 strMeal.text = data.strMeal
+                clockCooking.setText(DataRandom.randomTimeForCokking().toString())
             }
 
             itemView.setOnClickListener {
