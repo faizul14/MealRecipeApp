@@ -8,6 +8,8 @@ import com.faezolmp.mealrecipeapp.core.domain.model.ModelListMealBookMark
 import com.faezolmp.mealrecipeapp.core.domain.model.ModelListMealByCategory
 import com.faezolmp.mealrecipeapp.core.domain.repository.Repository
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class ImplementUseCase @Inject constructor(
@@ -42,5 +44,22 @@ class ImplementUseCase @Inject constructor(
 
     override fun deleteDataMealBooMark(dataBooMarkMeal: ModelListMealBookMark) {
         repository.deleteDataMealBooMark(dataBooMarkMeal)
+    }
+
+    override fun isBookMark(idmeal: String): Flow<Boolean> = flow {
+        repository.getDataMailBookmark().collect { resource ->
+            when (resource) {
+                is Resource.Success -> {
+                    val dataList = resource.data
+                    val isBookmarked = dataList?.any { it.idMeal == idmeal }
+                    if (isBookmarked == true) {
+                        emit(true)
+                    }
+                }
+                else -> {
+                    emit(false)
+                }
+            }
+        }
     }
 }

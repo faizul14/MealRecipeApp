@@ -1,5 +1,6 @@
 package com.faezolmp.mealrecipeapp.core.data
 
+import com.faezolmp.mealrecipeapp.core.data.source.local.LocalDataSource
 import com.faezolmp.mealrecipeapp.core.data.source.local.entity.EntityMeal
 import com.faezolmp.mealrecipeapp.core.data.source.local.room.DaoMeal
 import com.faezolmp.mealrecipeapp.core.data.source.remote.RemoteDataSource
@@ -20,7 +21,7 @@ import javax.inject.Inject
 
 class ImplementRepository @Inject constructor(
     private val remoteDataSource: RemoteDataSource,
-    private val daoMeal: DaoMeal,
+    private val localDataSource: LocalDataSource,
 ) : Repository {
     override fun sampleinterface() = "retunvaluesample"
     override fun getListCategory(): Flow<Resource<List<ModelListCategory>>> {
@@ -96,7 +97,7 @@ class ImplementRepository @Inject constructor(
         return flow {
             emit(Resource.Loading())
             try {
-                val dataResponse = daoMeal.getListDataMeal().first()
+                val dataResponse = localDataSource.getDataListMeal().first()
                 if (dataResponse.isNotEmpty()){
                     val data = DataMapper.mapperDataListBookMarkFromDataLayerToDomainLayer(dataResponse)
                     val dataResult = flowOf(Resource.Success(data))
@@ -111,10 +112,10 @@ class ImplementRepository @Inject constructor(
     }
 
     override suspend fun addDataMealBooMark(dataBookMarkMeal: ModelListMealBookMark) {
-        daoMeal.addMeal(DataMapper.mapperDataListBookMarkFromDomainLyerToDataLayer(dataBookMarkMeal))
+        localDataSource.addDataMeal(DataMapper.mapperDataListBookMarkFromDomainLyerToDataLayer(dataBookMarkMeal))
     }
 
     override fun deleteDataMealBooMark(dataBookMarkMeal: ModelListMealBookMark) {
-        daoMeal.deleteMeal(DataMapper.mapperDataListBookMarkFromDomainLyerToDataLayer(dataBookMarkMeal))
+        localDataSource.deleteDataMeal(DataMapper.mapperDataListBookMarkFromDomainLyerToDataLayer(dataBookMarkMeal))
     }
 }

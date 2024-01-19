@@ -19,4 +19,6 @@ class DetailReceipeViewModel @Inject constructor(private val useCase: UseCase): 
     fun deleteDataBookMark(dataBokmarkMeal: ModelListMealBookMark){
         useCase.deleteDataMealBooMark(dataBokmarkMeal)
     }
+
+    fun isBookMark(idmeal: String) = useCase.isBookMark(idmeal).asLiveData()
 }

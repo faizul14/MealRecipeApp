@@ -13,8 +13,8 @@ interface DaoMeal {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun addMeal(entityMeal: EntityMeal)
 
-    @Delete
-    fun deleteMeal(entityMeal: EntityMeal)
+    @Query("DELETE FROM EntityMeal WHERE idMeal=:idMeal")
+    fun deleteMeal(idMeal: String)
 
     @Query("SELECT * FROM EntityMeal")
     fun getListDataMeal(): Flow<List<EntityMeal>>

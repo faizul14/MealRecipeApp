@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.faezolmp.mealrecipeapp.core.data.Resource
 import com.faezolmp.mealrecipeapp.core.ui.ListCategoryAdapter
 import com.faezolmp.mealrecipeapp.core.ui.ListDataByAdapter
@@ -100,7 +101,7 @@ class MainActivity : AppCompatActivity(), ListCategoryAdapter.CallBackInterface 
         viewModel.getListDataMealByCategory(category).observe(this){dataMeal ->
             when (dataMeal) {
                 is Resource.Loading -> {
-                    Toast.makeText(this, "Loading .. .", Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(this, "Loading .. .", Toast.LENGTH_SHORT).show()
                 }
 
                 is Resource.Error -> {
@@ -131,6 +132,9 @@ class MainActivity : AppCompatActivity(), ListCategoryAdapter.CallBackInterface 
             loadingListMeal.visibility = View.VISIBLE
         }
 //        Toast.makeText(this@MainActivity, category, Toast.LENGTH_SHORT).show()
+        binding.apply {
+            popularText.setText("Meal recipe $category")
+        }
         try {
             lifecycleScope.launch {
                 viewModel.categoryClick.value = category

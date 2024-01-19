@@ -53,5 +53,7 @@
         app:lottie_repeatMode="reverse"
         app:lottie_loop="true"
         app:lottie_speed="0.8"
-        app:lottie_rawRes="@raw/loading_anim" />
+        app:lottie_rawRes="@raw/garpu_anim" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

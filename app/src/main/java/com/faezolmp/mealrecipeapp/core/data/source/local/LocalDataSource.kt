@@ -16,7 +16,7 @@ class LocalDataSource @Inject constructor(private val daoMeal: DaoMeal) {
 
     suspend fun addDataMeal(dataMeal: EntityMeal) = daoMeal.addMeal(dataMeal)
     fun deleteDataMeal(dataMeal: EntityMeal) = executorService.execute{
-        daoMeal.deleteMeal(dataMeal)
+        dataMeal.idMeal?.let { daoMeal.deleteMeal(it) }
     }
 
 }

@@ -20,6 +20,7 @@ class DetailReceipeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailReceipeBinding
     private val viewModel: DetailReceipeViewModel by viewModels()
     private lateinit var idmeal: String
+    private var isBookMark : Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,6 +34,14 @@ class DetailReceipeActivity : AppCompatActivity() {
     }
 
     private fun observerViewModel() {
+
+        viewModel.isBookMark(idmeal).observe(this){dataBookMark ->
+            if (dataBookMark is Boolean){
+                isBookMark = dataBookMark
+                isDataAvailable()
+            }
+        }
+
         viewModel.getDetailDataMeal(idmeal).observe(this) { dataMeal ->
             when (dataMeal) {
                 is Resource.Loading -> {
@@ -54,6 +63,13 @@ class DetailReceipeActivity : AppCompatActivity() {
         }
     }
 
+    private fun isDataAvailable(){
+        binding.apply {
+            val imgdraw = if (isBookMark) resources.getDrawable(R.drawable.mark_ic_true) else resources.getDrawable(R.drawable.mark_ic_false)
+            imgFavorite.setImageDrawable(imgdraw)
+        }
+    }
+
     private fun hitView(dataDetail: ModelDetailDataMeal) {
         binding.apply {
 
@@ -71,8 +87,15 @@ class DetailReceipeActivity : AppCompatActivity() {
                     strMealThumb = dataDetail.strMealThumb,
                     idMeal = dataDetail.idMeal,
                 )
-                viewModel.addDataBookMarkMeal(data)
-                imgFavorite.setImageDrawable(resources.getDrawable(R.drawable.mark_ic_true))
+                if (isBookMark){
+                    viewModel.deleteDataBookMark(data)
+                    isBookMark = false
+                }else{
+                    viewModel.addDataBookMarkMeal(data)
+                    isBookMark = true
+                }
+                isDataAvailable()
+//                imgFavorite.setImageDrawable(resources.getDrawable(R.drawable.mark_ic_true))
             }
             Glide
                 .with(this@DetailReceipeActivity)

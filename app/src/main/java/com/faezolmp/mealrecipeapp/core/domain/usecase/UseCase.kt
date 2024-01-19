@@ -17,4 +17,6 @@ interface UseCase {
 
     suspend fun addDataMealBooMark(dataBooMarkMeal: ModelListMealBookMark)
     fun deleteDataMealBooMark(dataBooMarkMeal: ModelListMealBookMark)
+
+    fun isBookMark(idmeal: String): Flow<Boolean>
 }

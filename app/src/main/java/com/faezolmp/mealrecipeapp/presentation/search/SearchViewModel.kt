@@ -16,7 +16,7 @@ class SearchViewModel @Inject constructor(private val useCase: UseCase): ViewMod
     val trackerSearch = MutableStateFlow("")
 
     val querySearch = trackerSearch
-        .debounce(300)
+        .debounce(100)
         .distinctUntilChanged()
         .filter {
             it.trim().isNotEmpty()
