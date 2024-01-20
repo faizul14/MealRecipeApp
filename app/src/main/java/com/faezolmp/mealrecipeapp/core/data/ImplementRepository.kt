@@ -27,45 +27,53 @@ class ImplementRepository @Inject constructor(
     override fun getListCategory(): Flow<Resource<List<ModelListCategory>>> {
         return flow {
             emit(Resource.Loading())
-            val dataResponse = remoteDataSource.getListCategory().first()
-            when (dataResponse) {
-                is ApiResponse.Success -> {
-                    val data =
-                        DataMapper.mapperListCategoryFromDataLayerToDomainLayer(dataResponse.data)
-                    val dataResult = flowOf(Resource.Success(data))
-                    emitAll(dataResult)
-                }
+           try {
+               val dataResponse = remoteDataSource.getListCategory().first()
+               when (dataResponse) {
+                   is ApiResponse.Success -> {
+                       val data =
+                           DataMapper.mapperListCategoryFromDataLayerToDomainLayer(dataResponse.data)
+                       val dataResult = flowOf(Resource.Success(data))
+                       emitAll(dataResult)
+                   }
 
-                is ApiResponse.Error -> {
-                    emit(Resource.Error(dataResponse.errorMessage))
-                }
+                   is ApiResponse.Error -> {
+                       emit(Resource.Error(dataResponse.errorMessage))
+                   }
 
-                is ApiResponse.Empty -> {
-                    emit(Resource.Loading())
-                }
-            }
+                   is ApiResponse.Empty -> {
+                       emit(Resource.Loading())
+                   }
+               }
+           }catch (e: Exception){
+               emit(Resource.Error(e.message.toString()))
+           }
         }
     }
 
     override fun getDataListByCategoryy(category: String, meal: String): Flow<Resource<List<ModelListMealByCategory>>> {
         return flow {
             emit(Resource.Loading())
-            val dataResponse = remoteDataSource.getDataListBy(category, meal).first()
-            when (dataResponse) {
-                is ApiResponse.Success -> {
-                    val data =
-                        DataMapper.mapperDataListByCategoryFromDataLayerToDomainLayer(dataResponse.data)
-                    val dataResult = flowOf(Resource.Success(data))
-                    emitAll(dataResult)
-                }
+            try {
+                val dataResponse = remoteDataSource.getDataListBy(category, meal).first()
+                when (dataResponse) {
+                    is ApiResponse.Success -> {
+                        val data =
+                            DataMapper.mapperDataListByCategoryFromDataLayerToDomainLayer(dataResponse.data)
+                        val dataResult = flowOf(Resource.Success(data))
+                        emitAll(dataResult)
+                    }
 
-                is ApiResponse.Error -> {
-                    emit(Resource.Error(dataResponse.errorMessage))
-                }
+                    is ApiResponse.Error -> {
+                        emit(Resource.Error(dataResponse.errorMessage))
+                    }
 
-                is ApiResponse.Empty -> {
-                    emit(Resource.Loading())
+                    is ApiResponse.Empty -> {
+                        emit(Resource.Loading())
+                    }
                 }
+            }catch (e: Exception){
+                emit(Resource.Error(e.message.toString()))
             }
         }
     }
@@ -73,23 +81,27 @@ class ImplementRepository @Inject constructor(
     override fun getDetailMealBy(idmeal: String): Flow<Resource<List<ModelDetailDataMeal>>> {
         return flow {
             emit(Resource.Loading())
-            val dataResponse = remoteDataSource.getDetailMealBy(idmeal).first()
-            when (dataResponse) {
-                is ApiResponse.Success -> {
-                    val data =
-                        DataMapper.mapperDataDetailFromDataLayerToDomainLayer(dataResponse.data)
-                    val dataResult = flowOf(Resource.Success(data))
-                    emitAll(dataResult)
-                }
+           try {
+               val dataResponse = remoteDataSource.getDetailMealBy(idmeal).first()
+               when (dataResponse) {
+                   is ApiResponse.Success -> {
+                       val data =
+                           DataMapper.mapperDataDetailFromDataLayerToDomainLayer(dataResponse.data)
+                       val dataResult = flowOf(Resource.Success(data))
+                       emitAll(dataResult)
+                   }
 
-                is ApiResponse.Error -> {
-                    emit(Resource.Error(dataResponse.errorMessage))
-                }
+                   is ApiResponse.Error -> {
+                       emit(Resource.Error(dataResponse.errorMessage))
+                   }
 
-                is ApiResponse.Empty -> {
-                    emit(Resource.Loading())
-                }
-            }
+                   is ApiResponse.Empty -> {
+                       emit(Resource.Loading())
+                   }
+               }
+           }catch (e: Exception){
+               emit(Resource.Error(e.message.toString()))
+           }
         }
     }
 

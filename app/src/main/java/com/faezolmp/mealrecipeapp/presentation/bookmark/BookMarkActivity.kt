@@ -43,7 +43,7 @@ class BookMarkActivity : AppCompatActivity() {
                 is Resource.Success -> {
                     dataMeal.data?.let { listBookMarkAdapter.setData(DataMapper.mapperHelper(it)) }
                     binding.rvBokmark.adapter = listBookMarkAdapter
-                    listBookMarkAdapter.notifyDataSetChanged()
+//                    listBookMarkAdapter.notifyDataSetChanged()
 //                    loading(false)
                 }
             }
