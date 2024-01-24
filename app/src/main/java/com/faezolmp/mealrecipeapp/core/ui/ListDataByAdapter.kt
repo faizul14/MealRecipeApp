@@ -14,9 +14,11 @@ class ListDataByAdapter : RecyclerView.Adapter<ListDataByAdapter.ViewHolder>() {
 
     private val listDataMealByCategory = ArrayList<ModelListMealByCategory>()
 
-    fun setData(newData: List<ModelListMealByCategory>) {
+    fun setData(newData: List<ModelListMealByCategory>?) {
         listDataMealByCategory.clear()
-        listDataMealByCategory.addAll(newData)
+        if (newData != null) {
+            listDataMealByCategory.addAll(newData)
+        }
         notifyDataSetChanged()
     }
 

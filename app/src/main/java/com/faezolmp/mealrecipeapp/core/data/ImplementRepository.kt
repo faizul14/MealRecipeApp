@@ -1,5 +1,6 @@
 package com.faezolmp.mealrecipeapp.core.data
 
+import android.view.Display.Mode
 import com.faezolmp.mealrecipeapp.core.data.source.local.LocalDataSource
 import com.faezolmp.mealrecipeapp.core.data.source.local.entity.EntityMeal
 import com.faezolmp.mealrecipeapp.core.data.source.local.room.DaoMeal
@@ -96,7 +97,8 @@ class ImplementRepository @Inject constructor(
                    }
 
                    is ApiResponse.Empty -> {
-                       emit(Resource.Loading())
+                       val dataNull = listOf<ModelDetailDataMeal>()
+                       emit(Resource.Success(dataNull))
                    }
                }
            }catch (e: Exception){
@@ -110,8 +112,8 @@ class ImplementRepository @Inject constructor(
             emit(Resource.Loading())
             try {
                 val dataResponse = localDataSource.getDataListMeal().first()
+                val data = DataMapper.mapperDataListBookMarkFromDataLayerToDomainLayer(dataResponse)
                 if (dataResponse.isNotEmpty()){
-                    val data = DataMapper.mapperDataListBookMarkFromDataLayerToDomainLayer(dataResponse)
                     val dataResult = flowOf(Resource.Success(data))
                     emitAll(dataResult)
                 }else{

@@ -18,9 +18,9 @@ class SearchViewModel @Inject constructor(private val useCase: UseCase): ViewMod
     val querySearch = trackerSearch
         .debounce(100)
         .distinctUntilChanged()
-        .filter {
-            it.trim().isNotEmpty()
-        }
+//        .filter {
+//            it.trim().isNotEmpty()
+//        }
         .mapLatest {
             it
         }.asLiveData()

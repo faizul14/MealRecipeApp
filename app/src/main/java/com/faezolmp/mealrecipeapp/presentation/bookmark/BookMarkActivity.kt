@@ -1,11 +1,12 @@
 package com.faezolmp.mealrecipeapp.presentation.bookmark
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
-import com.faezolmp.mealrecipeapp.R
 import com.faezolmp.mealrecipeapp.core.data.Resource
 import com.faezolmp.mealrecipeapp.core.helper.DataMapper
 import com.faezolmp.mealrecipeapp.core.ui.ListDataByAdapter
@@ -22,30 +23,48 @@ class BookMarkActivity : AppCompatActivity() {
         binding = ActivityBookMarkBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setUpInit()
+        viewModel.hitDb()
         observerViewModel()
     }
 
+
+    override fun onRestart() {
+        super.onRestart()
+        observerViewModel()
+        listBookMarkAdapter.setData(null)
+        viewModel.hitDb()
+    }
+
     private fun observerViewModel() {
-        viewModel.getListDataBookMark.observe(this){dataMeal ->
+        viewModel.data.observe(this) { dataMeal ->
             when (dataMeal) {
                 is Resource.Loading -> {
-//                    loading(true)
                 }
 
                 is Resource.Error -> {
                     Toast.makeText(
-                        this,
-                        "Error: ${dataMeal.message.toString()}",
-                        Toast.LENGTH_SHORT
+                        this, "Error: ${dataMeal.message.toString()}", Toast.LENGTH_SHORT
                     ).show()
                 }
 
                 is Resource.Success -> {
-                    dataMeal.data?.let { listBookMarkAdapter.setData(DataMapper.mapperHelper(it)) }
+                    Log.d("TRACKER", dataMeal.data.toString())
+                    isLoading(dataMeal.data?.size!!)
+                    dataMeal.data.let { listBookMarkAdapter.setData(DataMapper.mapperHelper(it)) }
                     binding.rvBokmark.adapter = listBookMarkAdapter
-//                    listBookMarkAdapter.notifyDataSetChanged()
-//                    loading(false)
                 }
+            }
+        }
+    }
+
+    private fun isLoading(data: Int) {
+        binding.apply {
+            if (data == 0) {
+                rvBokmark.visibility = View.GONE
+                txtNothinbook.visibility = View.VISIBLE
+            } else {
+                txtNothinbook.visibility = View.GONE
+                rvBokmark.visibility = View.VISIBLE
             }
         }
     }
@@ -53,8 +72,7 @@ class BookMarkActivity : AppCompatActivity() {
     private fun setUpInit() {
         binding.rvBokmark.apply {
             layoutManager = GridLayoutManager(
-                this@BookMarkActivity,
-                2
+                this@BookMarkActivity, 2
             )
             setHasFixedSize(true)
             adapter = listBookMarkAdapter

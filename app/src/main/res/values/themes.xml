@@ -1,9 +1,24 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="Base.Theme.MealRecipeApp" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="android:statusBarColor">
+            @android:color/transparent
+        </item>
+        <item name="android:windowLightStatusBar">true</item>
     </style>
 
     <style name="Theme.MealRecipeApp" parent="Base.Theme.MealRecipeApp" />
+
+    <style name="Base.Theme.MealRecipeAppSecond" parent="Theme.Material3.DayNight.NoActionBar">
+
+    </style>
+
+    <style name="Theme.MealRecipeAppSecondusage" parent="Base.Theme.MealRecipeAppSecond" />
+    <!--    <style name="Theme.MyApp">-->
+    <!--        <item name="android:statusBarColor">-->
+    <!--            @android:color/transparent-->
+    <!--        </item>-->
+    <!--    </style>-->
 </resources>
